@@ -24,7 +24,7 @@ class AdminController extends Controller
     public function users(Request $request)
     {
         if ($request->ajax()) {
-            $bendahara = User::role(['bendahara', 'admin', 'reader'])
+            $bendahara = User::role(['guru', 'admin', 'siswa'])
                 ->with('roles')
                 ->select(['id', 'name', 'email', 'kelas', 'status_pemilihan'])
                 ->get();

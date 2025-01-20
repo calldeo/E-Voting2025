@@ -214,8 +214,8 @@
                                             <th>No</th>
                                             <th>Nama</th>
                                             <th>Email</th>
-                                            <th>Jenis Kelamin</th>
-                                            <th>Alamat</th>
+                                            <th>Kelas</th>
+                                            <th>Status Pemilihan</th>
                                             <th>Peran</th>
                                             <th>Opsi</th>
                                         </tr>
@@ -258,8 +258,8 @@
                         <div class="col-sm-4 font-weight-bold">
                             Nama:<br />
                             Email:<br />
-                            Jenis Kelamin:<br />
-                            Alamat:<br />
+                            Kelas:<br />
+                            Status Pemilihan:<br />
                         </div>
                         <div class="col-sm-8">
                             <div id="name"></div>
@@ -295,8 +295,8 @@
                     success: function(data) {
                         modal.find('#name').text(data.name || 'N/A');
                         modal.find('#email').text(data.email || 'N/A');
-                        modal.find('#kelas').text(data.kelamin || 'N/A');
-                        modal.find('#status_pemilihan').text(data.alamat || 'N/A');
+                        modal.find('#kelas').text(data.kelas || 'N/A');
+                        modal.find('#status_pemilihan').text(data.status_pemilihan || 'N/A');
                         console.log('Data Detail:', data); // log saya ingin melihat datanya
                     },
                     error: function(xhr, status, error) {

@@ -24,11 +24,11 @@ class PermissionSeeder extends Seeder
             ['name'=>'Admin']
         );
 
-       $rolebendahara = Role::updateorcreate(
+       $roleguru = Role::updateorcreate(
             [
-                'name'=>'bendahara',
+                'name'=>'guru',
             ],
-            ['name'=>'bendahara']
+            ['name'=>'guru']
         );
 
         $permission = Permission::updateorcreate(
@@ -45,13 +45,13 @@ class PermissionSeeder extends Seeder
         );
         $roleadmin->givePermissionTo($permission);
         $roleadmin->givePermissionTo($permission2);
-        $rolebendahara->givePermissionTo($permission);
+        $roleguru->givePermissionTo($permission);
 
         $user = User::find(1);
         $user2 = User::find(4);
 
         $user->assignRole(['admin']);
-        $user2->assignRole(['bendahara']);
+        $user2->assignRole(['guru']);
 
 
 

@@ -130,7 +130,7 @@
                                     @enderror
                                 </div>
                                 
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label class="text-label">Jenis Kelamin *</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -146,18 +146,19 @@
                                     <span class="text-danger">{{$message}}</span>
                                     @enderror
                                 </div>
-                                
+                                 --}}
                                 <div class="form-group">
-                                    <label class="text-label">Alamat *</label>
+                                    <label class="text-label">Kelas *</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"> <i class="fa fa-map-marker-alt"></i> </span>
                                         </div>
-                                        <input type="text" class="form-control" id="val-address" name="alamat" placeholder="Masukkan alamat..." value="{{old('alamat')}}" required>
+                                        <input type="text" class="form-control" id="val-address" name="kelas" placeholder="Masukkan kelas..." value="{{old('kelas')}}" required>
                                     </div>
-                                    @error('alamat')
+                                    @error('kelas')
                                     <span class="text-danger">{{$message}}</span>
                                     @enderror
+                                        <small class="text-danger mt-2 d-block">* Gunakan huruf kapital untuk kelas dan romawi untuk nomor</small>
                                 </div>
                                 
                                 <div class="form-group">

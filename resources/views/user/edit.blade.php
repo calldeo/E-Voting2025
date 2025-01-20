@@ -120,7 +120,7 @@
                                         </div>
                                         <small class="text-danger mt-2 d-block">* Jika tidak ada perubahan, tidak perlu diisi</small>
                                     </div>
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label>Jenis Kelamin *</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -132,14 +132,14 @@
                                                 <option value="perempuan" {{ old('kelamin', $guruu->kelamin) == 'perempuan' ? 'selected' : '' }}>Perempuan</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group">
-                                        <label class="text-label">Alamat *</label>
+                                        <label class="text-label">Kelas *</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fa fa-map-marker-alt"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" name="alamat" value="{{ $guruu->alamat }}" placeholder="Masukkan alamat..." required>
+                                            <input type="text" class="form-control" name="kelas" value="{{ $guruu->kelas }}" placeholder="Masukkan kelas..." required>
                                         </div>
                                     </div>
                                     <div class="form-group">

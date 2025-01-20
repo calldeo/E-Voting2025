@@ -41,44 +41,49 @@ class BendaharaController extends Controller
         return view('user.add', compact('roles'));
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'min:3', 'max:30', 'regex:/^[a-zA-Z\s]+$/', function ($attribute, $value, $fail) {
+   public function store(Request $request)
+{
+    $request->validate([
+        'name' => [
+            'required', 
+            'min:3', 
+            'max:30', 
+            'regex:/^[a-zA-Z\s]+$/', 
+            function ($attribute, $value, $fail) {
                 if (User::where('name', $value)->exists()) {
                     $fail($attribute . ' is registered.');
                 }
-            }],
-            'email' => 'required|unique:users,email',
-            'password' => ['required', 'min:8', 'max:12'],
-            'kelamin' => 'required',
-            'alamat' => ['required', 'min:3', 'max:30'],
-            'level' => 'required|array'
-        ]);
-
-        DB::begintransaction();
-        try {
-            $bendahara = new User();
-            $bendahara->name = $request->name;
-            $bendahara->email = $request->email;
-            $bendahara->password = Hash::make($request->password);
-            $bendahara->kelamin = $request->kelamin;
-            $bendahara->alamat = $request->alamat;
-            $bendahara->save();
-
-            foreach ($request->level as $role) {
-                $bendahara->assignRole($role);
             }
+        ],
+        'email' => 'required|unique:users,email',
+        'password' => ['required', 'min:8', 'max:12'],
+        'kelas' => 'required',
+        'level' => 'required|array'
+    ]);
 
-            DB::commit();
+    DB::beginTransaction();
+    try {
+        $bendahara = new User();
+        $bendahara->name = $request->name;
+        $bendahara->email = $request->email;
+        $bendahara->password = Hash::make($request->password);
+        $bendahara->kelas = $request->kelas;
+        $bendahara->status_pemilihan = 'Belum Memilih'; 
+        $bendahara->save();
 
-            return redirect('/user')->with('success', 'User berhasil ditambahkan.');
-        } catch (\Throwable $th) {
-            DB::rollback();
-
-            return redirect('/user')->with('error', 'User gagal ditambahkan! ' . $th->getMessage());
+        foreach ($request->level as $role) {
+            $bendahara->assignRole($role);
         }
+
+        DB::commit();
+
+        return redirect('/user')->with('success', 'User berhasil ditambahkan.');
+    } catch (\Throwable $th) {
+        DB::rollback();
+
+        return redirect('/user')->with('error', 'User gagal ditambahkan! ' . $th->getMessage());
     }
+}
 
     public function edit($id)
     {
@@ -96,8 +101,8 @@ class BendaharaController extends Controller
             'name' => ['required', 'min:3', 'max:30', 'regex:/^[a-zA-Z\s]+$/'],
             'email' => 'required|email|unique:users,email,' . $guruu->id,
             'password' => ['nullable', 'min:8', 'max:12'],
-            'kelamin' => 'required',
-            'alamat' => ['required', 'min:3', 'max:30'],
+            'kelas' => 'required',
+            // 'status_pemilihan' => 'required',
             'roles' => 'required|array', 
             'roles.*' => 'exists:roles,name',
         ]);
@@ -106,8 +111,8 @@ class BendaharaController extends Controller
         try {
             $guruu->name = $request->name;
             $guruu->email = $request->email;
-            $guruu->kelamin = $request->kelamin;
-            $guruu->alamat = $request->alamat;
+            $guruu->kelas = $request->kelas;
+            // $guruu->status_pemilihan = $request->status_pemilihan;
 
             if ($request->filled('password')) {
                 $guruu->password = Hash::make($request->password);
@@ -177,8 +182,8 @@ class BendaharaController extends Controller
         return response()->json([
             'name' => $user->name,
             'email' => $user->email,
-            'kelamin' => $user->kelamin,
-            'alamat' => $user->alamat,
+            'kelas' => $user->kelas,
+            'status_pemilihan' => $user->status_pemilihan,
         ]);
     }
 }

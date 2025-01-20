@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
         'updated_at' => now(),
     ]
 );
-$admin->assignRole('admin', 'bendahara');
+$admin->assignRole('admin', 'guru');
 
 
 

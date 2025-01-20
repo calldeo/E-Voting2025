@@ -29,8 +29,8 @@ class RolePermissionSeeder extends Seeder
 
 
         Role::UpdateOrCreate(['name'=>'Admin']);
-        Role::UpdateOrCreate(['name'=>'Bendahara']);
-        Role::UpdateOrCreate(['name'=>'Reader']);
+        Role::UpdateOrCreate(['name'=>'Guru']);
+        Role::UpdateOrCreate(['name'=>'Siswa']);
 
 
         $roleAdmin = Role::findByName('Admin');
@@ -46,16 +46,16 @@ class RolePermissionSeeder extends Seeder
 
 
 
-        $roleBendahara = Role::findByName('Bendahara');
-        $roleBendahara->givePermissionTo('Data Pemasukan');
-        $roleBendahara->givePermissionTo('Data Pengeluaran');
-        $roleBendahara->givePermissionTo('Home');
+        $roleGuru = Role::findByName('Guru');
+        $roleGuru->givePermissionTo('Data Pemasukan');
+        $roleGuru->givePermissionTo('Data Pengeluaran');
+        $roleGuru->givePermissionTo('Home');
 
 
-        $roleReader = Role::findByName('Reader');
-        $roleReader->givePermissionTo('Data Pemasukan');
-        $roleReader->givePermissionTo('Data Pengeluaran');
-        $roleReader->givePermissionTo('Home');
+        $roleSiswa = Role::findByName('Siswa');
+        $roleSiswa->givePermissionTo('Data Pemasukan');
+        $roleSiswa->givePermissionTo('Data Pengeluaran');
+        $roleSiswa->givePermissionTo('Home');
 
     }
 }
