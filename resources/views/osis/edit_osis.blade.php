@@ -138,16 +138,20 @@
                                         <input type="text" class="form-control" name="slogan" value="{{ $calon->slogan }}" placeholder="Masukkan Slogan" required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Visi Misi *</label>
-                                        <textarea class="form-control" name="visimisi" rows="5" placeholder="Masukkan Visi Misi Calon" required>{{ $calon->visimisi }}</textarea>
+                                        <label>Visi</label>
+                                        <textarea class="form-control" id="visi" name="visi" rows="8" placeholder="Tuliskan visi">{{ $calon->visi }}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Misi</label>
+                                        <textarea class="form-control" id="misi" name="misi" rows="8" placeholder="Tuliskan misi">{{ $calon->misi }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Gambar *</label>
                                         <input type="file" class="form-control" name="gambar" accept="image/*">
                                     </div>
                                     <div class="mt-4">
+                                        <a href="/calon-osis" class="btn btn-light">Cancel</a>
                                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                        <a href="/calonosis" class="btn btn-light">Cancel</a>
                                     </div>
                                 </form>
                             </div>

@@ -19,7 +19,8 @@ class Osis extends Authenticatable
     protected $fillable = [  
         'id_user',  
         'nama_calon',
-        'visimisi',
+        'visi',
+        'misi',
         'NIS',
         'kelas',
         'gambar',

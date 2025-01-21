@@ -100,7 +100,7 @@
     @include('template.topbarr')
     @include('template.sidebarr')
 
-    <div class="content-body animate__animated animate__fadeIn">
+    <div class="content-body animate_animated animate_fadeIn">
         <div class="container-fluid">
             <div class="row page-titles mx-0 mb-4">
                 <div class="col-sm-6 p-md-0">
@@ -178,35 +178,25 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Modal -->
-                <div class="modal fade animate__animated animate__fadeIn" id="myModal{{ $calon->id }}" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">
-                                    <i class="fas fa-user-circle mr-2"></i>
-                                    Detail Calon OSIS - {{ $calon->nama_calon }}
-                                </h5>
-                                <button type="button" class="close text-white" data-dismiss="modal">
-                                    <span>&times;</span>
+                <div class="modal fade" id="myModal{{ $calon->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content" style="border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.1);">
+                            <div class="modal-header border-0" style="background: linear-gradient(45deg, #EB8153, #ff9b72); color: white; border-radius: 15px 15px 0 0;">
+                                <h5 class="modal-title" id="myModalLabel" style="font-weight: 600;">{{ $calon->nama_calon }}</h5>
+                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-4 mb-4 mb-md-0">
-                                            <img src="{{ asset('foto_calon/' . $calon->gambar) }}" 
-                                                 class="img-fluid rounded shadow-sm" 
-                                                 alt="{{ $calon->nama_calon }}">
-                                            <div class="mt-3">
-                                                <h6 class="font-weight-bold">Informasi Calon:</h6>
-                                                <p class="mb-1"><i class="fas fa-id-card mr-2"></i>NIS: {{ $calon->NIS }}</p>
-                                                <p class="mb-1"><i class="fas fa-graduation-cap mr-2"></i>Kelas: {{ $calon->kelas }}</p>
-                                                <p><i class="fas fa-calendar-alt mr-2"></i>Periode: {{ $calon->periode }}</p>
+                            <div class="modal-body py-4">
+                                <div class="container">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col-md-4">
+                                            <div class="position-relative" style="border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                                <img src="{{ asset('foto_calon/' . $calon->gambar) }}" class="img-fluid" alt="{{ $calon->nama_calon }}" style="object-fit: cover; width: 100%; height: 300px;">
                                             </div>
                                         </div>
-                                        <div class="col-md-8">
+                                      <div class="col-md-8">
                                             <div class="mb-4">
                                                 <h6 class="font-weight-bold mb-3">
                                                     <i class="fas fa-bullseye mr-2"></i>Visi
@@ -229,16 +219,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
+                            <div class="modal-footer border-0">
                                 <form action="{{ route('store-vote') }}" method="post" class="mr-2">
                                     @csrf
                                     <input type="hidden" name="id_user" value="{{ auth()->user()->id }}">
                                     <input type="hidden" name="id_calon" value="{{ $calon->id }}">
-                                    <button type="submit" class="btn btn-success">
-                                        <i class="fas fa-vote-yea mr-2"></i>Vote Sekarang
+                                    <button type="submit" class="btn px-4" style="background: linear-gradient(45deg, #4CAF50, #45a049); color: white; border-radius: 25px; font-weight: 500;">
+                                        <i class="fas fa-vote-yea mr-2"></i>Vote
                                     </button>
                                 </form>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                <button type="button" class="btn px-4" style="background: #e9ecef; color: #333; border-radius: 25px;" data-dismiss="modal">
                                     <i class="fas fa-times mr-2"></i>Tutup
                                 </button>
                             </div>
@@ -249,30 +239,29 @@
             </div>
         </div>
     </div>
+    <!-- Content body end -->
 
+    <!-- Main wrapper end -->
+
+    <!-- Scripts -->
+    <!-- Required vendors -->
     @include('template.scripts')
+
+    <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>
+        // Fungsi untuk menampilkan notifikasi toast
         function showVoteSuccessToast() {
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: 'Suara anda telah berhasil tercatat',
-                showConfirmButton: false,
-                timer: 2000
-            });
+            toastr.success('You have successfully voted!', 'Success');
         }
     
+        // Fungsi untuk menampilkan notifikasi toast ketika terjadi kesalahan
         function showVoteErrorToast() {
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal!',
-                text: 'Terjadi kesalahan. Silakan coba lagi.',
-                showConfirmButton: true
-            });
+            toastr.error('Failed to vote. Please try again later.', 'Error');
         }
     </script>
 
 </body>
+
 </html>

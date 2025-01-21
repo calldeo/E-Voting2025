@@ -74,28 +74,29 @@ class DataVoteController extends Controller
 
         // Ambil nama calon dari model User
         foreach ($hasilVotings as $hasilVoting) {
-            $user = User::find($hasilVoting->id_user); // Mengambil data calon dari model User
+            $user = User::with('roles')->find($hasilVoting->id_user); // Mengambil data user dengan roles
             $hasilVoting->name = $user ? $user->name : 'Tidak Ditemukan';
-            $hasilVoting->email = $user ? $user->email : 'Tidak Ditemukan'; 
-            $hasilVoting->level = $user ? $user->level : 'Tidak Ditemukan';// Menyimpan nama calon dalam atribut baru
-        }
-          foreach ($hasilVotings as $hasilVoting) {
-            $user = Osis::find($hasilVoting->id_calon); // Mengambil data calon dari model User
-            $hasilVoting->nama_calon = $user ? $user->nama_calon : 'Tidak Ditemukan'; // Menyimpan nama calon dalam atribut baru
+            $hasilVoting->email = $user ? $user->email : 'Tidak Ditemukan';
+            $hasilVoting->level = $user ? $user->level : 'Tidak Ditemukan';
+            $hasilVoting->roles = $user ? $user->roles->pluck('name')->implode(', ') : 'Tidak Ada Role'; // Menambahkan roles
         }
 
-      
+        foreach ($hasilVotings as $hasilVoting) {
+            $user = Osis::find($hasilVoting->id_calon);
+            $hasilVoting->nama_calon = $user ? $user->nama_calon : 'Tidak Ditemukan';
+        }
+
         $settings = SettingWaktu::all();
 
-            $expired = false;
-    foreach ($settings as $setting) {
-        if (Carbon::now()->greaterThanOrEqualTo($setting->waktu)) {
-            $expired = true;
-            break;
+        $expired = false;
+        foreach ($settings as $setting) {
+            if (Carbon::now()->greaterThanOrEqualTo($setting->waktu)) {
+                $expired = true;
+                break;
+            }
         }
-    }
 
-    return view('laporan.datavoted',['hasilVotings' => $hasilVotings], compact('settings', 'expired'));
+        return view('laporan.datavoted',['hasilVotings' => $hasilVotings], compact('settings', 'expired'));
     }
 
 

@@ -203,7 +203,8 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <h6 class="font-weight-bold mb-3">{{ $calon->nama_calon }}</h6>
-                                                <p class="text-muted">{{ $calon->visimisi }}</p>
+                                                <p class="text-muted">{{ $calon->visi }}</p>
+                                                <p class="text-muted">{{ $calon->misi }}</p>
                                             </div>
                                         </div>
                                     </div>

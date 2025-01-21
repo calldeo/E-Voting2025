@@ -74,7 +74,8 @@ class OsisController extends Controller
         // Validasi data yang diterima dari form
         $validatedData = $request->validate([
             'nama_calon' => 'required',
-            'visimisi' => 'required',
+            'visi' => 'required',
+            'misi' => 'required',
             'kelas'=>'required',
             'periode'=>'required',
             'slogan'=>'required',
@@ -89,7 +90,8 @@ class OsisController extends Controller
         // Simpan data calon OSIS ke dalam database
         Osis::create([       
             'nama_calon' => $validatedData['nama_calon'],
-            'visimisi' => $validatedData['visimisi'],
+            'visi' => $validatedData['visi'],
+            'misi' => $validatedData['misi'],
             'kelas' => $validatedData['kelas'],
             'periode' => $validatedData['periode'],
             'slogan' => $validatedData['slogan'],
@@ -98,7 +100,7 @@ class OsisController extends Controller
         ]);
 
         // Redirect ke halaman daftar calon OSIS dengan pesan sukses
-        return redirect('/calonosis')->with('success', 'Data calon OSIS berhasil ditambahkan.');
+        return redirect('/calon-osis')->with('success', 'Data calon OSIS berhasil ditambahkan.');
     }
 
 
@@ -128,7 +130,8 @@ class OsisController extends Controller
         // Validasi data yang diterima dari form, termasuk gambar
         $validatedData = $request->validate([
             'nama_calon' => 'required',
-            'visimisi' => 'required',
+            'visi' => 'required',
+            'misi' => 'required',
             'NIS' => 'required',
             'kelas' => 'required',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -158,7 +161,8 @@ class OsisController extends Controller
 
         // Update data calon OSIS
         $calon->nama_calon = $validatedData['nama_calon'];
-        $calon->visimisi = $validatedData['visimisi'];
+        $calon->visi = $validatedData['visi'];
+        $calon->misi = $validatedData['misi'];
         $calon->NIS = $validatedData['NIS'];
         $calon->kelas = $validatedData['kelas'];
         $calon->slogan = $validatedData['slogan'];

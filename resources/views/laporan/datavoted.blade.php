@@ -155,13 +155,13 @@
                                                     @php
                                                     $iconClass = '';
                                                     $badgeClass = '';
-                                                    if ($hasilVoting->level == 'guru') {
+                                                    if ($hasilVoting->roles == 'guru') {
                                                         $iconClass = 'bgl-info text-info';
                                                         $badgeClass = 'badge-info';
-                                                    } elseif ($hasilVoting->level == 'siswa') {
-                                                        $iconClass = 'bgl-light';
+                                                    } elseif ($hasilVoting->roles == 'siswa') {
+                                                        $iconClass = 'bgl-light'; 
                                                         $badgeClass = 'badge-light';
-                                                    } elseif ($hasilVoting->level == 'admin') {
+                                                    } elseif ($hasilVoting->roles == 'admin') {
                                                         $iconClass = 'bgl-success text-success';
                                                         $badgeClass = 'badge-success';
                                                     }
@@ -173,7 +173,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td><span class="badge {{ $badgeClass }}">{{ $hasilVoting->level }}</span></td>
+                                            <td><span class="badge {{ $badgeClass }}">{{ $hasilVoting->roles }}</span></td>
                                             <td>{{ $hasilVoting->nama_calon }}</td>
                                             <td><span class="text-primary">{{ $hasilVoting->tanggal }}</span></td>
                                         </tr>

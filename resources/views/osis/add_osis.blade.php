@@ -139,16 +139,20 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Kelas <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="kelas" name="kelas" placeholder="Contoh: XI IPA 1" required>
+                                        <input type="text" class="form-control" id="kelas" name="kelas" placeholder="Contoh: XI RPL 1 / XII RPL 1" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Slogan <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="slogan" name="slogan" placeholder="Masukkan slogan kampanye">
+                                    <input type="text" class="form-control" id="slogan" name="slogan" placeholder="Masukkan slogan ">
                                 </div>
                                 <div class="form-group">
-                                    <label>Visi & Misi</label>
-                                    <textarea class="form-control" id="visimisi" name="visimisi" rows="8" placeholder="Tuliskan visi dan misi"></textarea>
+                                    <label>Visi</label>
+                                    <textarea class="form-control" id="visi" name="visi" rows="8" placeholder="Tuliskan visi"></textarea>
+                                </div>  
+                                <div class="form-group">
+                                    <label>Misi</label>
+                                    <textarea class="form-control" id="misi" name="misi" rows="8" placeholder="Tuliskan misi"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Foto Calon</label>
