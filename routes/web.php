@@ -20,6 +20,9 @@ use App\Http\Controllers\PemasukanController;
 use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\OsisController;
+use App\Http\Controllers\DataVoteController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -105,6 +108,15 @@ Route::group(['middleware' => ['auth','permission:Kategori']], function (){
     Route::get('/download-template-kategori', [CategoryController::class, 'downloadTemplateExcel'])->name('download-template-kategori');
     Route::get('/kategori/{id}/detail', [CategoryController::class, 'showDetail'])->name('kategori.showDetail');
 
+
+    route::get('/calon-osis',[OsisController::class,'osis'])->name('calonosis');
+    route::get('/add_osis',[OsisController::class,'add_osis'])->name('add_osis');
+    Route::post('/osis/store',[OsisController::class,'store']);
+    Route::delete('/osis/{id}', [OsisController::class,'destroy'])->name('osis.destroy');
+    Route::get('/calonosis/{id}/edit_osis  ',[OsisController::class,'edit']);
+    Route::put('/calonosis/{id}',[OsisController::class,'update']);
+
+
 });
 
 Route::group(['middleware' => ['auth','permission:Data Pemasukan']], function (){
@@ -157,6 +169,10 @@ Route::group(['middleware' => ['auth','permission:Laporan']], function (){
     Route::get('/export-laporan', [LaporanController::class, 'exportLaporanPDF'])->name('export.laporan');
     Route::post('/export-laporan-excel', [LaporanController::class, 'exportLaporanExcel'])->name('export.laporan.excel');
 
+    Route::get('/laporan-polling',[DataVoteController::class,'viewPolling'])->name('laporan-polling');
+    Route::get('/cetaklaporan',[DataVoteController::class,'cetaklaporan'])->name('cetaklaporan');
+    Route::get('/laporan-voted',[DataVoteController::class,'viewVoted'])->name('laporan-voted');
+
 });
 
 Route::group(['middleware' => ['auth','permission:Setting']], function (){
@@ -170,4 +186,8 @@ Route::group(['middleware' => ['auth','permission:Setting']], function (){
     Route::put('/role/{id}',[SettingController::class,'update']);
     Route::get('/add', [SettingController::class, 'create']);
     Route::post('/role/store', [SettingController::class, 'store']);
+    Route::get('/setting-waktu', [SettingController::class, 'settingWaktu'])->name('setting-waktu');
+    Route::post('/update-waktu', [SettingController::class, 'updateWaktu'])->name('update-waktu');
+    Route::post('/store-vote', [SettingController::class, 'storeVote'])->name('store-vote');
+    Route::get('/vote', [SettingController::class, 'index'])->name('vote');
 });

@@ -2,7 +2,9 @@
 @php
 use Illuminate\Support\Facades\Log;
 @endphp
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"> --}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+
 <div class="deznav">
     <div class="deznav-scroll">
         <div class="main-profile">
@@ -31,6 +33,21 @@ use Illuminate\Support\Facades\Log;
                 </a>
                
             </li>
+            	@php
+						$settings = App\Models\SettingWaktu::first();
+						$showVote = false;
+						if($settings && \Carbon\Carbon::now()->isSameDay(\Carbon\Carbon::parse($settings->waktu))) {
+							$showVote = true;
+						}
+					@endphp
+
+					@if ($showVote)
+					<li><a href="/vote" aria-expanded="false">
+							<i class="flaticon-077-menu-1"></i>
+							<span class="nav-text">Vote</span>
+						</a>
+                    </li>
+					@endif
             @endcan
 @endif
          @if(in_array('Bendahara',$permissions))   
@@ -53,28 +70,15 @@ use Illuminate\Support\Facades\Log;
                     </a>
                 </li>
                 @endcan
+                 @can('Kategori')
+                <li class="{{ request()->is('calonosis*') || request()->is('add_osis') ? 'mm-active active-no-child' : '' }}">
+                    <a href="/calon-osis" aria-expanded="{{ request()->is('calonosis*') || request()->is('add_osis') ? 'true' : 'false' }}" class="{{ request()->is('calonosis*') || request()->is('add_osis') ? 'mm-active' : '' }}">
+                    <i class="bi bi-person-vcard"></i>
+                        <span class="nav-text">Data Calon OSIS</span>
+                    </a>
+                </li>
+                @endcan
             @endif
-         @if(in_array('Data Pemasukan',$permissions))   
-            @can('Data Pemasukan')
-            <li class="{{ request()->is('pemasukan*') || request()->is('add_pemasukan') ? 'mm-active active-no-child' : '' }}">
-                <a href="/pemasukan" aria-expanded="{{ request()->is('pemasukan*') || request()->is('add_pemasukan') ? 'true' : 'false' }}" class="{{ request()->is('pemasukan*') || request()->is('add_pemasukan') ? 'mm-active' : '' }}">
-                    <i class="bi bi-file-earmark-arrow-down"></i>
-                    <span class="nav-text">Data Pemasukan</span>
-                </a>
-            </li>
-            @endcan
-@endif
-         @if(in_array('Data Pengeluaran',$permissions))   
-
-            @can('Data Pengeluaran')
-            <li class="{{ request()->is('pengeluaran*') || request()->is('add_pengeluaran') ? 'mm-active active-no-child' : '' }}">
-                <a href="/pengeluaran" aria-expanded="{{ request()->is('pengeluaran*') || request()->is('add_pengeluaran') ? 'true' : 'false' }}" class="{{ request()->is('pengeluaran*') || request()->is('add_pengeluaran') ? 'mm-active' : '' }}">
-                    <i class="bi bi-file-earmark-arrow-up"></i>
-                    <span class="nav-text">Data Pengeluaran</span>
-                </a>
-            </li>
-            @endcan
-@endif
 
   @if(in_array('Laporan', $permissions))
     @can('Laporan')
@@ -82,27 +86,27 @@ use Illuminate\Support\Facades\Log;
         <li class="{{ request()->is('laporan*') || request()->is('laporan-kas*') ? 'mm-active' : '' }}">
             <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="{{ request()->is('laporan*') || request()->is('laporan-kas*') ? 'true' : 'false' }}">
                 <i class="bi bi-file-earmark-text"></i>
-                <span class="nav-text">Laporan Keuangan</span>
+                <span class="nav-text">Laporan </span>
             </a>
             
             <!-- Submenu -->
             <ul aria-expanded="{{ request()->is('laporan*') || request()->is('laporan-kas*') ? 'true' : 'false' }}" class="{{ request()->is('laporan*') || request()->is('laporan-kas*') ? 'mm-show' : 'mm-collapse' }}">
                 
-                <!-- Submenu Laporan Inflow & Outflow -->
-                <li class="{{ request()->is('laporan') ? 'mm-active' : '' }}">
-                    <a href="/laporan" class="{{ request()->is('laporan') ? 'mm-active' : '' }}">
-                        <i class="bi bi-wallet2"></i>
-                        <span class="nav-text">Laporan Inflow &<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Outflow</span>
+              
+                <li class="{{ request()->is('laporan-polling') ? 'mm-active' : '' }}">
+                    <a href="/laporan-polling" class="{{ request()->is('laporan-polling') ? 'mm-active' : '' }}">
+                        <i class="bi bi-database-lock"></i>
+                        <span class="nav-text">Data Polling</span>
+                    </a>
+                </li>
+                 <li class="{{ request()->is('laporan-voted') ? 'mm-active' : '' }}">
+                    <a href="/laporan-voted" class="{{ request()->is('laporan-voted') ? 'mm-active' : '' }}">
+                    <i class="bi bi-database-add"></i>
+                        <span class="nav-text">Data Voted</span>
                     </a>
                 </li>
 
-                <!-- Submenu Laporan Saldo Kas -->
-                <li class="{{ request()->is('laporan-kas') ? 'mm-active' : '' }}">
-                    <a href="/laporan-kas" class="{{ request()->is('laporan-kas') ? 'mm-active' : '' }}">
-                        <i class="bi bi-cash-coin"></i>
-                        <span class="nav-text">Laporan Saldo Kas</span>
-                    </a>
-                </li>
+            
             </ul>
         </li>
     @endcan
@@ -124,10 +128,10 @@ use Illuminate\Support\Facades\Log;
                             <span class="nav-text">Role</span>
                         </a>
                     </li>
-                    <li class="{{ request()->is('setting-saldo*') || request()->is('edit-minimal-saldo') ? 'mm-active' : '' }}">
-                        <a href="/setting-saldo" aria-expanded="{{ request()->is('setting-saldo*') || request()->is('edit-minimal-saldo') ? 'true' : 'false' }}" class="{{ request()->is('setting-saldo*') || request()->is('edit-minimal-saldo') ? 'mm-active' : '' }}">
-                            <i class="bi bi-cash-coin"></i>
-                            <span class="nav-text">Saldo</span>
+                    <li class="{{ request()->is('setting-waktu') ? 'mm-active' : '' }}">
+                        <a href="/setting-waktu" aria-expanded="{{ request()->is('setting-waktu') ? 'true' : 'false' }}" class="{{ request()->is('setting-waktu') ? 'mm-active' : '' }}">
+                        <i class="bi bi-calendar2-week"></i>
+                            <span class="nav-text">Waktu</span>
                         </a>
                     </li>
                 </ul>

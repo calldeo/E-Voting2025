@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\SettingWaktu;
+use Carbon\Carbon;
+use App\Models\Osis;
+use App\Models\HasilVoting;
+use App\Models\User;
 
 class SettingController extends Controller
 {
@@ -113,4 +118,107 @@ public function updateMinimalSaldo(Request $request)
         return redirect()->route('saldo')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
     }
 }
+
+
+
+ public function settingWaktu()
+    {
+        // Ambil semua pengaturan waktu
+        $settings = SettingWaktu::all();
+
+        // Awalnya kita asumsikan pengaturan sudah expired
+        $expired = true;
+
+        // Periksa setiap pengaturan waktu
+        foreach ($settings as $setting) {
+            // Jika ada pengaturan yang diatur pada hari ini, maka belum expired
+            if (Carbon::parse($setting->waktu)->isToday()) {
+                $expired = false;
+                break;
+            }
+        }
+
+        // Simpan status expired ke dalam session untuk digunakan di sidebar
+        session()->put('expired', $expired);
+
+        // Kirim data pengaturan dan status expired ke tampilan
+        return view('setting.setting', compact('settings', 'expired'));
+    }
+
+    public function updateWaktu(Request $request)
+    {
+        $request->validate([
+            'waktu' => 'required|date',
+        ]);
+
+        $id = $request->input('id');
+        $tanggal = $request->input('waktu');
+
+        $setting = SettingWaktu::find($id);
+
+        if (!$setting) {
+            return response()->json(['success' => false, 'message' => 'Setting waktu tidak ditemukan']);
+        }
+
+        $setting->waktu = $tanggal;
+
+        if ($setting->save()) {
+            // Perbarui status expired berdasarkan tanggal saat ini
+            $expired = Carbon::now()->greaterThan($tanggal); // Menggunakan greaterThan untuk menyembunyikan menu setelah tanggal
+
+            // Simpan $expired dalam session
+            session()->put('expired', $expired);
+
+            return response()->json(['success' => true, 'message' => 'Berhasil mengupdate setting waktu', 'tanggal' => $tanggal, 'expired' => $expired]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Gagal mengupdate setting waktu']);
+        }
+    }
+
+    public function index(Request $request)
+    {
+        // Ambil semua data calon OSIS dari database
+        $calonOsis = Osis::all();
+             $settings = SettingWaktu::all();
+
+            $expired = false;
+    foreach ($settings as $setting) {
+        if (Carbon::now()->greaterThanOrEqualTo($setting->waktu)) {
+            $expired = true;
+            break;
+        }
+    }
+        // Return view dengan data calon OSIS
+        return view('vote.vote', compact('calonOsis','settings','expired'));
+    }
+
+
+    public function storeVote(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'id_user' => 'required',
+            'id_calon' => 'required',
+            // tambahkan validasi lainnya sesuai kebutuhan
+        ]);
+
+        // Cek apakah pengguna sudah melakukan voting sebelumnya
+        $existingVote = HasilVoting::where('id_user', $request->id_user)->exists();
+        if ($existingVote) {
+            return redirect('/vote')->with('update_success', 'Anda sudah melakukan voting sebelumnya');
+        }
+
+        // Simpan hasil voting ke dalam tabel hasil_voting
+        HasilVoting::create([
+            'id_user' => $request->id_user,
+            'id_calon' => $request->id_calon,
+            'tanggal' => now(), // Menggunakan tanggal saat ini
+            // tambahkan field lainnya sesuai kebutuhan
+        ]);
+
+        // Set nilai status pemilihan pengguna menjadi 'sudah memilih'
+        User::where('id', $request->id_user)->update(['status_pemilihan' => 'Sudah Memilih']);
+
+        return redirect('/vote')->with('success', 'Anda Telah Melakukan Vote');
+    }
 }

@@ -76,20 +76,7 @@
                         </div> --}}
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                <div class="media align-items-center">
-                                    <i class="fas fa-wallet mr-2"></i> <!-- Ikon dompet -->
-                                    <div class="media-body">
-                                        <h5 class="mb-0
-                                            @if($saldo <= $minimalSaldo)
-                                                text-danger
-                                            @endif">
-                                            Saldo: Rp{{ number_format($saldo, 0, ',', '.') }}
-                                        </h5>
-                                        @if($saldo <= $minimalSaldo)
-                                            <p class="text-warning mb-0">Peringatan: Saldo Anda sudah di batas minimal (Rp{{ number_format($minimalSaldo, 0, ',', '.') }})</p>
-                                        @endif
-                                    </div>
-                                </div>
+                              
                             </a>
                         </li>
                         
