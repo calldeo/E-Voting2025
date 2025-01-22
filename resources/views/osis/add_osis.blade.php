@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Calon OSIS Baru</title>
+    <title>E-vote | {{ auth()->user()->level }} | Tambah Data OSIS</title>
     @include('template.headerr')
     <title>E-vote | {{auth()->user()->level}} | Add</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -119,7 +119,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title mb-0">Form Tambah Calon OSIS</h4>
+                            <h4 class="card-title mb-0 text-white">Form Tambah Calon OSIS</h4>
                         </div>
                         <div class="card-body p-4">
                             <form action="/osis/store" method="POST" enctype="multipart/form-data">
@@ -159,9 +159,10 @@
                                     <input type="file" class="form-control-file" id="gambar" name="gambar">
                                     <small class="text-muted">Format: JPG, JPEG, PNG (Max: 2MB)</small>
                                 </div>
-                                <div class="text-right mt-4">
-                                    <button type="submit" class="btn btn-primary px-5">Simpan Data</button>
-                                </div>
+                                < <div class="form-group mt-4 text-right">
+                                        <a href="/calon-osis" class="btn btn-danger btn-cancel mr-2"><i class="fas fa-times mr-1"></i> Batal</a>
+                                        <button type="submit" class="btn btn-primary btn-submit"><i class="fas fa-save mr-1"></i> Simpan</button>
+                                    </div>
                             </form>
                         </div>
                     </div>
@@ -169,6 +170,14 @@
             </div>
         </div>
     </div>
+      <footer class="footer mt-auto py-3 bg-white shadow-sm animate__animated animate__fadeInUp">
+        <div class="container text-center">
+            <span class="text-muted">
+                Hak Cipta © Dirancang &amp; Dikembangkan oleh 
+                <a href="https://www.instagram.com/_calldeo?igsh=MmR6Mm4yem54NXA5" target="_blank" class="text-primary">Deo Andreas</a> 2025
+            </span>
+        </div>
+    </footer>
 
     @include('template.scripts')
 </body>

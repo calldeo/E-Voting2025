@@ -19,11 +19,9 @@ class RolePermissionSeeder extends Seeder
         //
         Permission::UpdateOrCreate(['name'=>'Home']);
         Permission::UpdateOrCreate(['name'=>'Admin']);
-        Permission::UpdateOrCreate(['name'=>'Bendahara']);
-        Permission::UpdateOrCreate(['name'=> 'Kategori']);
+        Permission::UpdateOrCreate(['name'=>'User']);
+        Permission::UpdateOrCreate(['name'=> 'Data Calon OSIS']);
         Permission::UpdateOrCreate(['name'=> 'Setting']);
-        Permission::UpdateOrCreate(['name'=>'Data Pemasukan']);
-        Permission::UpdateOrCreate(['name'=>'Data Pengeluaran']);
         Permission::UpdateOrCreate(['name'=>'Laporan']);
 
 
@@ -36,25 +34,19 @@ class RolePermissionSeeder extends Seeder
         $roleAdmin = Role::findByName('Admin');
         $roleAdmin->givePermissionTo('Home');
         $roleAdmin->givePermissionTo('Admin');
-        $roleAdmin->givePermissionTo('Bendahara');
-        $roleAdmin->givePermissionTo('Kategori');
-        $roleAdmin->givePermissionTo('Data Pemasukan');
-        $roleAdmin->givePermissionTo('Data Pengeluaran');
-        $roleAdmin->givePermissionTo('Laporan');
+        $roleAdmin->givePermissionTo('User');
+        $roleAdmin->givePermissionTo('Data Calon OSIS');
         $roleAdmin->givePermissionTo('Setting');
+        $roleAdmin->givePermissionTo('Laporan');
 
 
 
 
         $roleGuru = Role::findByName('Guru');
-        $roleGuru->givePermissionTo('Data Pemasukan');
-        $roleGuru->givePermissionTo('Data Pengeluaran');
         $roleGuru->givePermissionTo('Home');
 
 
         $roleSiswa = Role::findByName('Siswa');
-        $roleSiswa->givePermissionTo('Data Pemasukan');
-        $roleSiswa->givePermissionTo('Data Pengeluaran');
         $roleSiswa->givePermissionTo('Home');
 
     }

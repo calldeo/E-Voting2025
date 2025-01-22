@@ -23,11 +23,34 @@
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
-        .card-header {
-            background: linear-gradient(45deg, #EB8153, #ff9b72);
+         .card-header {
+            background: linear-gradient(45deg, #EB8153 , #EB8153);
             color: white;
-            border-radius: 20px 20px 0 0;
+            border-bottom: none;
             padding: 25px;
+            position: relative;
+            overflow: hidden;
+            animation: gradientBG 10s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            transform: rotate(45deg);
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            0% {transform: translateX(-50%) rotate(45deg);}
+            100% {transform: translateX(50%) rotate(45deg);}
         }
         .welcome-text {
             animation: fadeInLeft 1s ease;
@@ -61,6 +84,9 @@
             font-weight: 500;
             transition: all 0.3s ease;
         }
+        .animate__animated {
+            animation-duration: 0.8s;
+        }
         .btn:hover {
             transform: translateY(-2px);
         }
@@ -69,9 +95,9 @@
             border: none;
         }
         .btn-primary {
-            background: linear-gradient(45deg, #007bff, #0056b3);
-            border: none;
-        }
+            background: linear-gradient(45deg, #ff0000b4, #c80a0a);
+                border: none;
+            }
         .modal-content {
             border-radius: 20px;
             border: none;
@@ -123,8 +149,8 @@
                     </div>
                 </div>
                 <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                    <ol class="breadcrumb bg-transparent">
-                        <li class="breadcrumb-item"><a href="#" class="text-primary">Dashboard</a></li>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
                         <li class="breadcrumb-item active">Pengaturan Waktu</li>
                     </ol>
                 </div>

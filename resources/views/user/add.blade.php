@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     @include('template.headerr')
-    <title>PityCash | {{auth()->user()->level}} | Tambah Data Pengguna</title>
+    <title>E-vote | {{auth()->user()->level}} | Tambah Data Pengguna</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -153,7 +153,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"> <i class="fa fa-map-marker-alt"></i> </span>
                                         </div>
-                                        <input type="text" class="form-control" id="val-address" name="kelas" placeholder="Masukkan kelas..." value="{{old('kelas')}}" required>
+                                        <input type="text" class="form-control" id="val-address" name="kelas" placeholder="Contoh : XI RPL1" value="{{old('kelas')}}" required>
                                     </div>
                                     @error('kelas')
                                     <span class="text-danger">{{$message}}</span>
@@ -190,11 +190,14 @@
         </div>
     </div>
 
-    <div class="footer">
-        <div class="copyright">
-            <p>Copyright © Designed &amp; Developed by <a href="/home" target="_blank">SYNC</a> 2024</p>
+   <footer class="footer mt-auto py-3 bg-white shadow-sm animate__animated animate__fadeInUp">
+        <div class="container text-center">
+            <span class="text-muted">
+                Hak Cipta © Dirancang &amp; Dikembangkan oleh 
+                <a href="https://www.instagram.com/_calldeo?igsh=MmR6Mm4yem54NXA5" target="_blank" class="text-primary">Deo Andreas</a> 2025
+            </span>
         </div>
-    </div>
+    </footer>
 
     @include('template.scripts')
     

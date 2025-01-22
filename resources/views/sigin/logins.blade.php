@@ -8,7 +8,7 @@
     <meta name="description" content="Icewall admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Icewall Admin Template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="LEFT4CODE">
-    <title>Login - PityCash</title>
+    <title>Login - E-Vote</title>
     <!-- BEGIN: CSS Assets-->
     <link rel="stylesheet" href="{{ asset('dashboards/dist/css/app.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
@@ -113,7 +113,7 @@
             <!-- BEGIN: Login Info -->
             <div class="hidden xl:flex flex-col min-h-screen">
                 <div class="my-auto">
-                    <img alt="Brand Title" class="-intro-x w-1/2 -mt-16" src="{{ asset('dashboards/dist/images/piticash.png') }}" width="150" height="50">
+                    <img alt="Brand Title" class="-intro-x w-1/2 -mt-16" src="{{ asset('dashboards/dist/images/vote.png') }}" width="150" height="50">
                     <div class="-intro-x text-white font-medium text-1xl leading-tight mt-10">
                         Nothing is impossible. Anything can happen as long as we believe.
                         <br>

@@ -3,7 +3,7 @@
 
 <head>
     @include('template.headerr')
-    <title>PityCash | {{auth()->user()->level}} | User</title>
+    <title>E-vote | {{auth()->user()->level}} | User</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -232,11 +232,7 @@
         </div>
     </div>
 
-    <footer class="footer mt-auto py-3 bg-white shadow-sm animate__animated animate__fadeInUp">
-        <div class="container text-center">
-            <span class="text-muted">Hak Cipta © Dirancang &amp; Dikembangkan oleh <a href="/home" target="_blank" class="text-primary">SYNC</a> 2024</span>
-        </div>
-    </footer>
+   
 
     @include('template.scripts')
     <input type="hidden" id="table-url" value="{{ route('users') }}">
@@ -275,6 +271,14 @@
             </div>
         </div>
     </div>
+      <footer class="footer mt-auto py-3 bg-white shadow-sm animate__animated animate__fadeInUp">
+        <div class="container text-center">
+            <span class="text-muted">
+                Hak Cipta © Dirancang &amp; Dikembangkan oleh 
+                <a href="https://www.instagram.com/_calldeo?igsh=MmR6Mm4yem54NXA5" target="_blank" class="text-primary">Deo Andreas</a> 2025
+            </span>
+        </div>
+    </footer>
   
     <script>
         $(document).ready(function() {

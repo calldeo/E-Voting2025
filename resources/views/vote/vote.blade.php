@@ -239,6 +239,14 @@
             </div>
         </div>
     </div>
+     <footer class="footer mt-auto py-3 bg-white shadow-sm animate__animated animate__fadeInUp">
+        <div class="container text-center">
+            <span class="text-muted">
+                Hak Cipta © Dirancang &amp; Dikembangkan oleh 
+                <a href="https://www.instagram.com/_calldeo?igsh=MmR6Mm4yem54NXA5" target="_blank" class="text-primary">Deo Andreas</a> 2025
+            </span>
+        </div>
+    </footer>
     <!-- Content body end -->
 
     <!-- Main wrapper end -->

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
     <div class="deznav-scroll">
         <div class="main-profile">
             <div class="image-bx">
-                <img src="{{ auth()->user()->poto ? asset('storage/' . auth()->user()->poto) : asset('dash/images/mamo.jpeg') }}" width="20" alt="">
+                <img src="{{ auth()->user()->poto ? asset('storage/' . auth()->user()->poto) : asset('dash/images/kaneta.png') }}" width="20" alt="">
             </div>
             <h5 class="name"><span class="font-w400">Hello,</span>{{auth()->user()->name}}</h5>
             <p class="email"><a href="javascript:void(0);" class="cf_email">{{auth()->user()->email}}</a></p>
@@ -50,9 +50,9 @@ use Illuminate\Support\Facades\Log;
 					@endif
             @endcan
 @endif
-         @if(in_array('Bendahara',$permissions))   
+         @if(in_array('User',$permissions))   
 
-            @can('Bendahara')
+            @can('User')
             <li class="{{ request()->is('user*') || request()->is('add_user') ? 'mm-active active-no-child' : '' }}">
                 <a href="/user" aria-expanded="{{ request()->is('user*') || request()->is('add_user') ? 'true' : 'false' }}" class="{{ request()->is('user*') || request()->is('add_user') ? 'mm-active' : '' }}">
                     <i class="bi bi-people"></i>
@@ -61,8 +61,8 @@ use Illuminate\Support\Facades\Log;
             </li>
             @endcan
 @endif
-            @if(in_array('Kategori',$permissions))
-                @can('Kategori')
+            @if(in_array('Data Calon OSIS',$permissions))
+                @can('Data Calon OSIS')
                 <li class="{{ request()->is('kategori*') || request()->is('add_kategori') ? 'mm-active active-no-child' : '' }}">
                     <a href="/kategori" aria-expanded="{{ request()->is('kategori*') || request()->is('add_kategori') ? 'true' : 'false' }}" class="{{ request()->is('kategori*') || request()->is('add_kategori') ? 'mm-active' : '' }}">
                         <i class="bi bi-grid"></i>
@@ -70,7 +70,7 @@ use Illuminate\Support\Facades\Log;
                     </a>
                 </li>
                 @endcan
-                 @can('Kategori')
+                 @can('Data Calon OSIS')
                 <li class="{{ request()->is('calonosis*') || request()->is('add_osis') ? 'mm-active active-no-child' : '' }}">
                     <a href="/calon-osis" aria-expanded="{{ request()->is('calonosis*') || request()->is('add_osis') ? 'true' : 'false' }}" class="{{ request()->is('calonosis*') || request()->is('add_osis') ? 'mm-active' : '' }}">
                     <i class="bi bi-person-vcard"></i>

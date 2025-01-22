@@ -27,11 +27,34 @@
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
-        .card-header {
-            background: linear-gradient(45deg, #EB8153, #ff9b72);
+         .card-header {
+            background: linear-gradient(45deg, #EB8153 , #EB8153);
             color: white;
-            border-radius: 20px 20px 0 0;
+            border-bottom: none;
             padding: 25px;
+            position: relative;
+            overflow: hidden;
+            animation: gradientBG 10s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            transform: rotate(45deg);
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            0% {transform: translateX(-50%) rotate(45deg);}
+            100% {transform: translateX(50%) rotate(45deg);}
         }
         .welcome-text {
             animation: fadeInLeft 1s ease;
@@ -174,11 +197,14 @@
         </div>
     </div>
 
-    <div class="footer">
-        <div class="copyright">
-            <p>Copyright © Designed &amp; Developed by <a href="/home" target="_blank">Deo Andreas</a> 2024</p>
+  <footer class="footer mt-auto py-3 bg-white shadow-sm animate__animated animate__fadeInUp">
+        <div class="container text-center">
+            <span class="text-muted">
+                Hak Cipta © Dirancang &amp; Dikembangkan oleh 
+                <a href="https://www.instagram.com/_calldeo?igsh=MmR6Mm4yem54NXA5" target="_blank" class="text-primary">Deo Andreas</a> 2025
+            </span>
         </div>
-    </div>
+    </footer>
 
     @include('template.scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

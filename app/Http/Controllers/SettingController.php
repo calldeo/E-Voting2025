@@ -78,47 +78,7 @@ class SettingController extends Controller
 
 
 
-    public function saldo(Request $request)
-    {
-        $totalPemasukan = Pemasukan::sum('jumlah');
-        $totalPengeluaran = Pengeluaran::sum('jumlah');
-        
-        $saldo = $totalPemasukan - $totalPengeluaran;
-
-        $minimalSaldo = SettingSaldo::first()->saldo ?? 0;
-
-        return view('saldo.saldo', compact('totalPemasukan', 'totalPengeluaran', 'saldo', 'minimalSaldo'));
-    }
-
-public function editMinimalSaldo()
-{
-    $settingSaldo = SettingSaldo::first();
-    $minimalSaldo = $settingSaldo ? $settingSaldo->saldo : 0;
-    
-    $totalPemasukan = Pemasukan::sum('jumlah');
-    $totalPengeluaran = Pengeluaran::sum('jumlah');
-    $saldo = $totalPemasukan - $totalPengeluaran;
-    
-    return view('saldo.edit_saldo', compact('minimalSaldo', 'saldo'));
-}
-
-public function updateMinimalSaldo(Request $request)
-{
-    try {
-        $request->validate([
-            'saldo_hidden' => 'required|numeric|min:0',
-        ]);
-
-        $settingSaldo = SettingSaldo::firstOrNew();
-        $settingSaldo->saldo = $request->saldo_hidden;
-        $settingSaldo->save();
-
-        return redirect()->route('saldo')->with('success', 'Minimal saldo berhasil diperbarui');
-    } catch (\Exception $e) {
-        return redirect()->route('saldo')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
-    }
-}
-
+   
 
 
  public function settingWaktu()
@@ -175,6 +135,7 @@ public function updateMinimalSaldo(Request $request)
         }
     }
 
+    //vote
     public function index(Request $request)
     {
         // Ambil semua data calon OSIS dari database

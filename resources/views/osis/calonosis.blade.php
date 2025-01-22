@@ -5,6 +5,7 @@
     @include('template.headerr')
     <title>E-vote | {{auth()->user()->level}} | Calon Osis </title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -173,7 +174,7 @@
                                     </div>
                                     <div class="btn-group d-flex justify-content-center" style="margin-top: 15px" role="group">
                                         <form id="editForm_{{ $calon->id}}" action="/calonosis/{{ $calon->id}}/edit_osis" method="GET">
-                                            <button type="submit" class="btn btn-warning shadow btn-xs sharp"><i class="fa fa-pencil"></i></button>
+                                            <button type="submit" class="btn btn-warning shadow btn-xs sharp"><i class="fas fa-edit"></i></button>
                                         </form>
                                         <form id="deleteForm_{{ $calon->id}}" action="{{ route('osis.destroy', $calon->id) }}" method="POST" class="delete-form ml-2">
                                             @csrf

@@ -3,7 +3,7 @@
 
 <head>
     @include('template.headerr')
-    <title>E-vote | {{auth()->user()->level}} | Edit</title>
+    <title>E-vote | {{auth()->user()->level}} | Edit Data OSIS</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
@@ -108,7 +108,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title mb-0">Edit Data Calon OSIS</h4>
+                            <h4 class="card-title mb-0 text-white"> Form Edit Calon OSIS</h4>
                         </div>
                         <div class="card-body">
                             <div class="basic-form">
@@ -149,10 +149,10 @@
                                         <label>Gambar *</label>
                                         <input type="file" class="form-control" name="gambar" accept="image/*">
                                     </div>
-                                    <div class="mt-4">
-                                        <a href="/calon-osis" class="btn btn-light">Cancel</a>
-                                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                    </div>
+                                     <div class="form-group mt-4 text-right">
+                                        <a href="/calon-osis" class="btn btn-danger btn-cancel mr-2"><i class="fas fa-times mr-1"></i> Batal</a>
+                                        <button type="submit" class="btn btn-primary btn-submit"><i class="fas fa-save mr-1"></i> Simpan</button>
+                                    </div>  
                                 </form>
                             </div>
                         </div>
@@ -162,11 +162,14 @@
         </div>
     </div>
 
-    <div class="footer">
-        <div class="copyright">
-            <p>Copyright © Designed &amp; Developed by <a href="/home" target="_blank">SYNC</a> 2024</p>
+  <footer class="footer mt-auto py-3 bg-white shadow-sm animate__animated animate__fadeInUp">
+        <div class="container text-center">
+            <span class="text-muted">
+                Hak Cipta © Dirancang &amp; Dikembangkan oleh 
+                <a href="https://www.instagram.com/_calldeo?igsh=MmR6Mm4yem54NXA5" target="_blank" class="text-primary">Deo Andreas</a> 2025
+            </span>
         </div>
-    </div>
+    </footer>
 
     @include('template.scripts')
 </body>

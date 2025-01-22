@@ -3,7 +3,7 @@
 
 <head>
     @include('template.headerr')
-    <title>PityCash | {{ auth()->user()->level }} | Edit Data User</title>
+    <title>E-vote | {{ auth()->user()->level }} | Edit Data Pengguna</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -72,7 +72,7 @@
                 <div class="col-lg-8">
                     <div class="card animate__animated animate__fadeIn">
                         <div class="card-header">
-                            <h4 class="card-title mb-0 text-white">Edit Data User</h4>
+                            <h4 class="card-title mb-0 text-white">Edit Data Pengguna</h4>
                         </div>
                         <div class="card-body">
                             @if(session('error'))
@@ -137,9 +137,9 @@
                                         <label class="text-label">Kelas *</label>
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fa fa-map-marker-alt"></i></span>
+                                                <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" name="kelas" value="{{ $guruu->kelas }}" placeholder="Masukkan kelas..." required>
+                                            <input type="text" class="form-control" name="kelas" value="{{ $guruu->kelas }}" placeholder="Contoh: XI RPL1" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -177,6 +177,14 @@
             </div>
         </div>
     </div>
+      <footer class="footer mt-auto py-3 bg-white shadow-sm animate__animated animate__fadeInUp">
+        <div class="container text-center">
+            <span class="text-muted">
+                Hak Cipta © Dirancang &amp; Dikembangkan oleh 
+                <a href="https://www.instagram.com/_calldeo?igsh=MmR6Mm4yem54NXA5" target="_blank" class="text-primary">Deo Andreas</a> 2025
+            </span>
+        </div>
+    </footer>
     @include('template.scripts')
     <script>
         const togglePassword = document.querySelector('#togglePassword');

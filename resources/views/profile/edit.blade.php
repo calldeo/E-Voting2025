@@ -137,19 +137,15 @@
                                     <input type="email" class="form-control" id="email" name="email" value="{{ auth()->user()->email }}" required>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="kelamin">Jenis Kelamin</label>
-                                    <select class="form-control" id="kelamin" name="kelamin" disabled>
-                                        <option value="laki-laki" {{ auth()->user()->kelamin == 'laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                                        <option value="perempuan" {{ auth()->user()->kelamin == 'perempuan' ? 'selected' : '' }}>Perempuan</option>
-                                    </select>
-                                    <input type="hidden" name="kelamin" value="{{ auth()->user()->kelamin }}">
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="alamat">Alamat</label>
-                                    <input type="text" class="form-control" id="alamat" name="alamat" value="{{ auth()->user()->alamat }}" required>
-                                </div>
+                                  <div class="form-group">
+                                        <label class="text-label">Kelas *</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                            </div>
+                                            <input type="text" class="form-control" name="kelas" value="{{ auth()->user()->kelas }}" placeholder="Contoh: XI RPL 1 / XII RPL 1" required>
+                                        </div>
+                                    </div>
 
                                 <div class="form-group">
                                     <label for="password">Password Baru</label>

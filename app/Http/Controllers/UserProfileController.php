@@ -24,16 +24,18 @@ public function update(Request $request)
     $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255',
-        'alamat' => 'required|string|max:255',
+        'kelas' => 'required',
         'password' => 'nullable|string|min:8',
         'foto_profil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+
+
     ]);
 
     DB::beginTransaction();
     try {
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->alamat = $request->alamat;
+        $user->kelas = $request->kelas;
 
         if ($request->hasFile('foto_profil')) {
             if ($user->poto && Storage::disk('public')->exists($user->poto)) {
