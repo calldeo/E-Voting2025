@@ -90,6 +90,9 @@ Route::group(['middleware' => ['auth','permission:User']], function (){
     Route::put('/guruu/{id}',[BendaharaController::class,'update']);
     Route::get('/user/{id}/detail', [BendaharaController::class, 'showDetail'])->name('user.showDetail');
 Route::post('/switch-role', [BendaharaController::class, 'switchRole'])->name('switchRole');
+Route::post('/import-user', [BendaharaController::class, 'importUser'])->name('import-user');
+Route::get('/download-template-user', [BendaharaController::class, 'downloadTemplateExcel'])->name('download-template-user');
+
 
 });
 

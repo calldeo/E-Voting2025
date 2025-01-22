@@ -157,6 +157,36 @@
         .action-buttons .btn:hover {
             transform: translateY(-2px);
         }
+        .btn-export {
+            color: #f3f5f3;
+            background-color: transparent;
+            border: 2px solid #fdfdfd;
+            border-radius: 30px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+        .btn-export:hover, .btn-export:active, .btn-export:focus {
+            color: #fff;
+            background-color: #d74709;
+            border-color: #f7f8f7;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+        .btn-import {
+            color: #f3f5f3;
+            background-color: transparent;
+            border: 2px solid #fdfdfd;
+            border-radius: 30px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+        .btn-import:hover, .btn-import:active, .btn-import:focus {
+            color: #fff;
+            background-color: #d74709;
+            border-color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+        }
     </style>
 </head>
 
@@ -183,9 +213,14 @@
                     <div class="card animate__animated animate__fadeInUp">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="card-title mb-0 text-white">Data Pengguna</h4>
-                            <a href="/add-user" class="btn btn-outline-success animate__animated animate__bounceIn" title="Tambah">
-                                <i class="fas fa-user-plus mr-2"></i> Tambah Pengguna
-                            </a>
+                            <div>
+                                <button type="button" class="btn btn-import mr-2" data-toggle="modal" data-target="#importModal">
+                                    <i class="fas fa-upload mr-2"></i> Import
+                                </button>
+                                <a href="/add-user" class="btn btn-outline-success animate__animated animate__bounceIn" title="Tambah">
+                                    <i class="fas fa-user-plus mr-2"></i> Tambah Pengguna
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             @if(session('success'))
@@ -201,6 +236,15 @@
                             <div class="alert alert-warning alert-dismissible fade show animate__animated animate__bounceIn">
                                 <i class="fas fa-exclamation-circle mr-2"></i>
                                 <strong>Berhasil!</strong> {{ session('update_success') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
+                            @if(session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show animate__animated animate__bounceIn">
+                                <i class="fas fa-exclamation-circle mr-2"></i>
+                                <strong>Gagal!</strong> {{ session('error') }}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -271,7 +315,38 @@
             </div>
         </div>
     </div>
-      <footer class="footer mt-auto py-3 bg-white shadow-sm animate__animated animate__fadeInUp">
+
+    <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel" style="color: #fff">Import Data User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('import-user') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group" style="text-align: left;">
+                            <label for="file">Pilih File Excel</label>
+                            <input type="file" class="dropify" id="file" name="file" required accept=".xls,.xlsx">
+                        </div>
+                        <div style="text-align: left; margin-top: 10px;">
+                            <a href="{{ route('download-template-user') }}">
+                                Download Template Excel
+                            </a>
+                        </div>
+                        <div style="text-align: left; margin-top: 10px;">
+                            <button type="submit" class="btn btn-primary">Import</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer mt-auto py-3 bg-white shadow-sm animate__animated animate__fadeInUp">
         <div class="container text-center">
             <span class="text-muted">
                 Hak Cipta © Dirancang &amp; Dikembangkan oleh 
@@ -352,6 +427,9 @@
                     }
                 });
             });
+
+            $('.dropify').dropify();
+            $('.dropify-wrapper .dropify-message p').css('font-size', '20px');
         });
     </script>
 </body>

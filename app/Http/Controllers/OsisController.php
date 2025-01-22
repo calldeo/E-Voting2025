@@ -86,6 +86,7 @@ class OsisController extends Controller
         // Proses penyimpanan gambar
         $imageName = time().'.'.$request->gambar->extension();
         $request->gambar->move(public_path('/foto_calon'), $imageName);
+        
 
         // Simpan data calon OSIS ke dalam database
         Osis::create([       

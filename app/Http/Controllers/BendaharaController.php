@@ -186,4 +186,158 @@ class BendaharaController extends Controller
             'status_pemilihan' => $user->status_pemilihan,
         ]);
     }
+
+    public function importUser(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            $request->validate([
+                'file' => 'required|file|mimes:xlsx,xls,csv|max:5120', // Ditingkatkan menjadi 5MB untuk menampung lebih banyak data
+            ]);
+
+            $file = $request->file('file');
+            $namafile = $file->getClientOriginalName();
+            $file->move(public_path('DataUser'), $namafile);
+
+            // Validasi struktur file Excel
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path('DataUser/' . $namafile));
+            $worksheet = $spreadsheet->getActiveSheet();
+            
+            // Ambil header dari baris ke-2 (A2:D2)
+            $headers = [];
+            foreach ($worksheet->getRowIterator(2, 2) as $row) {
+                $cellIterator = $row->getCellIterator('A', 'D');
+                $cellIterator->setIterateOnlyExistingCells(false);
+                foreach ($cellIterator as $cell) {
+                    $headers[] = $cell->getValue();
+                }
+            }
+
+            // Periksa apakah header sesuai dengan yang diharapkan
+            $expectedHeaders = ['Nama', 'Email', 'Kelas', 'Role'];
+            $missingHeaders = array_diff($expectedHeaders, $headers);
+
+            if (!empty($missingHeaders)) {
+                @unlink(public_path('DataUser/' . $namafile));
+                return redirect()->back()->with('error', 'Format file tidak sesuai. Pastikan menggunakan template yang benar.');
+            }
+
+            // Baca semua data dari baris ke-3 sampai baris terakhir
+            $highestRow = $worksheet->getHighestRow();
+            
+            // Proses data dalam batch untuk mengoptimalkan memori
+            $batchSize = 100;
+            $processedRows = 0;
+            $duplicateData = [];
+            
+            for($row = 3; $row <= $highestRow; $row++) {
+                $nama = $worksheet->getCell('A' . $row)->getValue();
+                $email = $worksheet->getCell('B' . $row)->getValue();
+                $kelas = $worksheet->getCell('C' . $row)->getValue();
+                $role = $worksheet->getCell('D' . $row)->getValue();
+
+                // Skip jika baris kosong
+                if(empty($nama) && empty($email) && empty($kelas) && empty($role)) {
+                    continue;
+                }
+
+                // Validasi role
+                if(!in_array($role, ['1', '2'])) { // 1 untuk Guru, 2 untuk Siswa
+                    throw new \Exception('Role tidak valid pada baris ' . $row);
+                }
+
+                // Cek duplikasi data
+                $existingUser = User::where('email', $email)->first();
+                if($existingUser) {
+                    $duplicateData[] = [
+                        'row' => $row,
+                        'email' => $email,
+                        'name' => $nama
+                    ];
+                    continue;
+                }
+
+                // Simpan ke database
+                $user = User::create([
+                    'name' => $nama,
+                    'email' => $email,
+                    'password' => Hash::make('password123'), // Default password
+                    'kelas' => $kelas,
+                    'status_pemilihan' => 'Belum Memilih'
+                ]);
+
+                // Assign role
+                $roleName = ($role == '1') ? 'guru' : 'siswa';
+                $user->assignRole($roleName);
+
+                $processedRows++;
+                
+                // Commit setiap batch untuk menghemat memori
+                if($processedRows % $batchSize === 0) {
+                    DB::commit();
+                    DB::beginTransaction();
+                }
+            }
+
+            DB::commit();
+            @unlink(public_path('DataUser/' . $namafile));
+
+            if(!empty($duplicateData)) {
+                $duplicateMessage = 'Beberapa data tidak diimpor karena sudah ada:';
+                foreach($duplicateData as $duplicate) {
+                    $duplicateMessage .= "\nBaris {$duplicate['row']}: {$duplicate['name']} ({$duplicate['email']})";
+                }
+                return redirect('/user')->with('error', $duplicateMessage);
+            }
+
+            return redirect('/user')->with('success', 'Data User Berhasil Diimport');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            if(file_exists(public_path('DataUser/' . $namafile))) {
+                @unlink(public_path('DataUser/' . $namafile));
+            }
+
+            \Log::error('Import user failed: ' . $e->getMessage());
+
+            return redirect('/user')->with('error', 'Terjadi kesalahan saat mengimpor data: ' . $e->getMessage());
+        }
+    }
+
+    public function downloadTemplateExcel()
+    {
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle('Data User');
+        $sheet->setCellValue('A1', 'Import User');
+        $sheet->mergeCells('A1:D1');
+        $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1')->getFont()->setBold(true);
+        $sheet->setCellValue('A2', 'Nama');
+        $sheet->setCellValue('B2', 'Email');
+        $sheet->setCellValue('C2', 'Kelas');
+        $sheet->setCellValue('D2', 'Role');
+        $sheet->setCellValue('F2', 'Keterangan')->getStyle('F2')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('FFFF00');
+        $sheet->setCellValue('F3', '1. Pengisian data dimulai dari baris ke-3');
+        $sheet->setCellValue('F4', '2. Kolom D (Role) diisi dengan kode dari sheet Role');
+        
+        $sheet2 = $spreadsheet->createSheet();
+        $sheet2->setTitle('Role');
+        $sheet2->setCellValue('A1', 'Kode');
+        $sheet2->setCellValue('B1', 'Role');
+        $sheet2->setCellValue('A2', '1');
+        $sheet2->setCellValue('B2', 'Guru');
+        $sheet2->setCellValue('A3', '2');
+        $sheet2->setCellValue('B3', 'Siswa');
+        
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $filename = 'template-user.xlsx';
+        $filePath = storage_path('app/public/' . $filename);
+        $writer->save($filePath);
+        
+        return response()->download($filePath, $filename)->deleteFileAfterSend(true);
+    }
 }
