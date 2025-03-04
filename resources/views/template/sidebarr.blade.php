@@ -1,4 +1,3 @@
-        
 @php
 use Illuminate\Support\Facades\Log;
 @endphp
@@ -33,6 +32,12 @@ use Illuminate\Support\Facades\Log;
                 </a>
                
             </li>
+            <li><a  href="/petunjuk" aria-expanded="false">
+                <i class="bi bi-journal"></i>
+                <span class="nav-text">Petunjuk Penggunaan</span>
+            </a>
+           
+        </li>
             	@php
 						$settings = App\Models\SettingWaktu::first();
 						$showVote = false;

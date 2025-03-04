@@ -239,7 +239,7 @@
             </div>
         </div>
     </div>
-     <footer class="footer mt-auto py-3 bg-white shadow-sm animate__animated animate__fadeInUp">
+     <footer class="footer mt-auto py-3 bg-white shadow-sm animate_animated animate_fadeInUp">
         <div class="container text-center">
             <span class="text-muted">
                 Hak Cipta © Dirancang &amp; Dikembangkan oleh 
@@ -256,19 +256,54 @@
     @include('template.scripts')
 
     <!-- Sweet Alert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // Fungsi untuk menampilkan notifikasi toast
-        function showVoteSuccessToast() {
-            toastr.success('You have successfully voted!', 'Success');
+           // Tampilkan alert jika berhasil voting
+    @if(session('vote_success'))
+        showVoteSuccessAlert();
+    @endif
+
+    // Tampilkan alert jika sudah pernah memilih
+    @if(session('already_voted'))
+        showAlreadyVotedAlert();
+    @endif
+        // Fungsi untuk menampilkan notifikasi sukses setelah vote
+        function showVoteSuccessAlert() {
+            Swal.fire({
+                title: "Berhasil Memilih!",
+                text: "Terima kasih telah memberikan suara Anda.",
+                icon: "success",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#28a745",
+                timer: 3000, // Notifikasi otomatis hilang dalam 3 detik
+                showClass: {
+                    popup: 'animate_animated animate_zoomIn'
+                },
+                hideClass: {
+                    popup: 'animate_animated animate_fadeOut'
+                }
+            });
         }
     
-        // Fungsi untuk menampilkan notifikasi toast ketika terjadi kesalahan
-        function showVoteErrorToast() {
-            toastr.error('Failed to vote. Please try again later.', 'Error');
+        // Fungsi untuk menampilkan notifikasi jika sudah memilih
+        function showAlreadyVotedAlert() {
+            Swal.fire({
+                title: "Anda Sudah Memilih!",
+                text: "Anda hanya bisa memberikan suara sekali saja.",
+                icon: "warning",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#ffc107",
+                showClass: {
+                    popup: 'animate_animated animate_shakeX'
+                },
+                hideClass: {
+                    popup: 'animate_animated animate_fadeOut'
+                }
+            });
         }
     </script>
+    
 
 </body>
 

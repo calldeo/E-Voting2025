@@ -187,6 +187,6 @@ class OsisController extends Controller
         $calonOsis->delete();
 
         // Redirect dengan pesan sukses
-        return redirect('/calonosis')->with('success', 'Calon OSIS berhasil dihapus.');
+        return redirect('/calon-osis')->with('success', 'Calon OSIS berhasil dihapus.');
     }
 }

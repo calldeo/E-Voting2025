@@ -105,6 +105,12 @@
             background-color: #e06b3d !important;
         }
     </style>
+    <style>
+    .logo-large {
+        width: 450px; /* Atur lebar */
+        height: auto; /* Mempertahankan rasio */
+    }
+</style>
     <!-- END: CSS Assets -->
 </head>
 <body class="login">
@@ -113,7 +119,7 @@
             <!-- BEGIN: Login Info -->
             <div class="hidden xl:flex flex-col min-h-screen">
                 <div class="my-auto">
-                    <img alt="Brand Title" class="-intro-x w-1/2 -mt-16" src="{{ asset('dashboards/dist/images/vote.png') }}" width="150" height="50">
+<img alt="Brand Title" class="-intro-x w-1/2 -mt-16 logo-large" src="{{ asset('dashboards/dist/images/20.png') }}">
                     <div class="-intro-x text-white font-medium text-1xl leading-tight mt-10">
                         Nothing is impossible. Anything can happen as long as we believe.
                         <br>

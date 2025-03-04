@@ -12,36 +12,28 @@ use Carbon\Carbon;
 
 class DataVoteController extends Controller
 {
- public function viewPolling()
+
+    public function viewPolling()
     {
-        // Mengambil data hasil voting beserta nama calon dan jumlah suara
+        // Mengambil semua hasil voting
         $hasilVotings = Polling::all();
-        
+    
+        // Reset jumlah_vote di tabel Osis sebelum diperbarui
         Osis::query()->update(['jumlah_vote' => 0]);
-
-    // Hitung jumlah suara untuk setiap calon dan tambahkan ke tabel calon_osis
-        foreach ($hasilVotings as $hasilVoting) {
-        // Cari calon menggunakan id_calon dari hasil voting
-        $calon = Osis::find($hasilVoting->id_calon);
-
-        // Jika calon ditemukan, tambahkan jumlah suara dari hasil voting
-        if ($calon) {
-            $calon->increment('jumlah_vote');
-        }
-    }
-        $calonOsis = Osis::all();   
-        // return view('halaman.datapolling', ['calonOsis' => $calonOsis]);
-   $settings = SettingWaktu::all();
-
-            $expired = false;
-    foreach ($settings as $setting) {
-        if (Carbon::now()->greaterThanOrEqualTo($setting->waktu)) {
-            $expired = true;
-            break;
-        }
-    }
-
-    return view('laporan.datapolling',['calonOsis' => $calonOsis], compact('settings', 'expired'));
+    
+        // Mengupdate jumlah suara berdasarkan hasil voting
+        Osis::whereIn('id', $hasilVotings->pluck('id_calon'))
+            ->update(['jumlah_vote' => \DB::raw('jumlah_vote + 1')]);
+    
+        // Ambil data calon Osis yang sudah diurutkan berdasarkan jumlah suara (ranking)
+        $calonOsis = Osis::orderBy('jumlah_vote', 'desc')->get();
+    
+        // Ambil pengaturan waktu voting
+        $settings = SettingWaktu::all();
+        $expired = $settings->some(fn($setting) => Carbon::now()->greaterThanOrEqualTo($setting->waktu));
+    
+        // Kirim data ke tampilan
+        return view('laporan.datapolling', compact('calonOsis', 'settings', 'expired'));
     }
     
 

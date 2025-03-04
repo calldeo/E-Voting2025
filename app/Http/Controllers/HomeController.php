@@ -77,7 +77,7 @@ class HomeController extends Controller
         }
     }
         // Meneruskan data ke tampilan
-        return view('halaman.petunjuk', compact('expired','settings'));
+        return view('petunjuk.petunjuk', compact('expired','settings'));
     }
 
 }

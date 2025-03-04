@@ -197,6 +197,12 @@
 
     <div class="content-body animate__animated animate__fadeIn" style="margin-top: -100px;">
         <div class="container-fluid py-5">
+            <div class="col-sm-6 p-md-0">
+                    <div class="welcome-text">
+                        <h4 class="mb-2">Selamat Datang Kembali!</h4>
+                        <p class="mb-0 text-muted">Data Pengguna</p>
+                    </div>
+                </div>
             <div class="row mb-4">
                 <div class="col-12 text-right">
                     <nav aria-label="breadcrumb">
